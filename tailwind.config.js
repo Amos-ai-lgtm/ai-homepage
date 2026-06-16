@@ -23,6 +23,9 @@ export default {
             }
         },
         extend: {
+            fontFamily: {
+                'glow-sans-sc': ['Glow Sans SC', 'sans-serif'],
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 borderColor: {
