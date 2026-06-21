@@ -6,34 +6,34 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Send, Bot, User, Sparkles, BookOpen, Cpu, PenTool } from 'lucide-react';
+import { Send, Bot, User, Sparkles, BookOpen, Cpu, PenTool, ExternalLink, Mail, MessageCircle } from 'lucide-react';
 import { sendMessage, generateSessionId, getChatHistory } from '@/services/api';
 import type { ChatMessage } from '@/types/types';
 import { toast } from 'sonner';
 
-const AVATAR_URL = 'https://miaoda-site-img.cdn.bcebos.com/images/baidu_image_search_a6372095-f6c5-4895-a5f5-d32ec7b44947.jpg';
+const AVATAR_URL = '/images/avatar.jpg';
 
 const infoItems = [
   {
     icon: <Cpu className="w-4 h-4" />,
     label: '现在在做',
-    value: '整理自己的作品和写作方向',
+    value: '整理作品集，探索 AI 能帮我做什么',
   },
   {
     icon: <Sparkles className="w-4 h-4" />,
     label: '兴趣',
-    value: 'AI 应用、写作、动漫',
+    value: 'AI 应用、写作、动漫、发呆',
   },
   {
     icon: <BookOpen className="w-4 h-4" />,
     label: '特点',
-    value: '喜欢把复杂问题讲成人话',
+    value: '喜欢把复杂问题讲成人话，偶尔也会把简单问题讲复杂',
   },
 ];
 
 const suggestedQuestions = [
-  '你现在在做什么？',
-  '你有哪些作品？',
+  '你现在在干嘛？',
+  '你有什么爱好？',
   '怎么联系你？',
 ];
 
@@ -108,100 +108,137 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* 顶部装饰线 */}
-      <div className="h-1 bg-primary w-full" />
-
-      <div className="max-w-3xl mx-auto px-4 py-8 md:py-12 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-12 md:py-16">
         {/* 头部区域 */}
-        <header className="flex flex-col items-center text-center space-y-4 opacity-0 animate-fade-in">
-          <Avatar className="w-24 h-24 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
-            <AvatarImage src={AVATAR_URL} alt="叶秋的头像" />
-            <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-semibold">
+        <header className="flex flex-col items-center text-center opacity-0 animate-fade-in mb-10">
+          <Avatar className="w-28 h-28 ring-4 ring-primary/10 ring-offset-4 ring-offset-background mb-5">
+            <AvatarImage src={AVATAR_URL} alt="秋叶的头像" />
+            <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
               叶
             </AvatarFallback>
           </Avatar>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground text-balance">
-              叶秋
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg text-pretty max-w-md mx-auto">
-              一个正在学习用 AI 做产品的内容策划
-            </p>
-          </div>
-          <div className="flex gap-2 flex-wrap justify-center">
-            <Badge variant="secondary" className="gap-1">
-              <PenTool className="w-3 h-3" />
-              内容策划
-            </Badge>
-            <Badge variant="secondary" className="gap-1">
-              <Cpu className="w-3 h-3" />
-              AI 应用
-            </Badge>
-            <Badge variant="secondary" className="gap-1">
-              <BookOpen className="w-3 h-3" />
-              知识整理
-            </Badge>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground text-balance mb-3">
+            秋叶
+          </h1>
+          <p className="text-muted-foreground text-base md:text-lg text-pretty max-w-md mx-auto mb-6">
+正在用 AI 做点有趣的东西，喜欢把复杂问题讲成人话
+          </p>
+          <div className="flex items-center justify-center gap-3 flex-wrap w-full">
+            <div className="flex gap-2">
+              <Badge variant="outline" className="gap-1 px-3 py-1">
+                <Cpu className="w-3 h-3" />
+                AI 学习者
+              </Badge>
+              <Badge variant="outline" className="gap-1 px-3 py-1">
+                <Sparkles className="w-3 h-3" />
+                产品探索
+              </Badge>
+              <Badge variant="outline" className="gap-1 px-3 py-1">
+                <PenTool className="w-3 h-3" />
+                内容输出
+              </Badge>
+            </div>
+            <div className="w-px h-6 bg-muted hidden sm:block" />
+            <Button size="lg">
+              查看作品
+            </Button>
           </div>
         </header>
 
-        <Separator />
-
-        {/* 个人信息展示区 */}
-        <section className="opacity-0 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <Card className="border-border/60 shadow-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-semibold text-foreground">关于我</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {infoItems.map((item) => (
-                <div key={item.label} className="flex items-start gap-3">
-                  <div className="mt-0.5 p-1.5 rounded-md bg-primary/10 text-primary shrink-0">
-                    {item.icon}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-medium text-muted-foreground mb-0.5">{item.label}</p>
-                    <p className="text-sm text-foreground text-pretty">{item.value}</p>
-                  </div>
+        {/* 个人信息展示区 - 去掉卡片，更简洁 */}
+        <section className="opacity-0 animate-fade-in mb-10" style={{ animationDelay: '0.1s' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {infoItems.map((item) => (
+              <div key={item.label} className="flex flex-col items-center text-center p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
+                <div className="p-2 rounded-full bg-primary/10 text-primary mb-2">
+                  {item.icon}
                 </div>
-              ))}
-            </CardContent>
-          </Card>
+                <p className="text-xs font-medium text-muted-foreground mb-1">{item.label}</p>
+                <p className="text-sm text-foreground font-medium">{item.value}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 作品展示区 */}
+        <section className="opacity-0 animate-fade-in mb-10" style={{ animationDelay: '0.15s' }}>
+          <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-primary" />
+            作品
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="#" className="group block p-5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all border border-transparent hover:border-primary/20">
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">个人主页</h3>
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <p className="text-sm text-muted-foreground">用 AI 搭建的个人主页，包含数字分身聊天功能</p>
+            </a>
+            <a href="#" className="group block p-5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all border border-transparent hover:border-primary/20">
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">作品集</h3>
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <p className="text-sm text-muted-foreground">正在整理中，敬请期待...</p>
+            </a>
+          </div>
+        </section>
+
+        {/* 联系方式区 */}
+        <section className="opacity-0 animate-fade-in mb-10" style={{ animationDelay: '0.18s' }}>
+          <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+            <MessageCircle className="w-5 h-5 text-primary" />
+            联系我
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted/30 text-sm text-foreground">
+              <Mail className="w-4 h-4 text-primary" />
+              <span>17332616557@163.com</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted/30 text-sm text-foreground">
+              <MessageCircle className="w-4 h-4 text-primary" />
+              <span>微信：YS2387747421</span>
+            </div>
+          </div>
         </section>
 
         {/* 数字分身聊天区 */}
-        <section className="opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <Card className="border-border/60 shadow-sm flex flex-col h-[500px] md:h-[520px]">
-            <CardHeader className="pb-3 shrink-0">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-primary/10 text-primary">
-                  <Bot className="w-4 h-4" />
+        <section className="opacity-0 animate-fade-in" style={{ animationDelay: '0.22s' }}>
+          <Card className="border-primary/30 border-2 shadow-lg flex flex-col h-[500px] md:h-[550px]">
+            <CardHeader className="pb-4 shrink-0 bg-gradient-to-r from-primary/10 to-transparent border-b border-primary/10">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-primary text-primary-foreground shadow-sm">
+                  <Bot className="w-5 h-5" />
                 </div>
-                <div>
-                  <CardTitle className="text-lg font-semibold text-foreground">和叶秋的数字分身聊聊</CardTitle>
-                  <p className="text-xs text-muted-foreground mt-0.5">问我关于职业、兴趣、作品等问题</p>
+                <div className="flex-1">
+                  <CardTitle className="text-xl font-bold text-foreground">和秋叶的数字分身聊聊</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-0.5">问我关于职业、兴趣、作品等问题</p>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/10">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-xs text-green-600 font-medium">在线</span>
                 </div>
               </div>
             </CardHeader>
-            <Separator />
             <CardContent className="flex-1 flex flex-col p-0 min-h-0">
               {/* 消息列表 */}
-              <ScrollArea ref={scrollRef} className="flex-1 px-4 py-3">
+              <ScrollArea ref={scrollRef} className="flex-1 px-4 py-4">
                 {messages.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-center space-y-4 py-8">
-                    <div className="p-3 rounded-full bg-primary/10 text-primary">
-                      <Sparkles className="w-6 h-6" />
+                  <div className="flex flex-col items-center justify-center h-full text-center py-10">
+                    <div className="p-4 rounded-full bg-primary/10 text-primary mb-4">
+                      <Sparkles className="w-8 h-8" />
                     </div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-foreground">你好！我是叶秋的数字分身</p>
-                      <p className="text-xs text-muted-foreground">可以问我关于叶秋的任何问题</p>
+                    <div className="space-y-2 mb-6">
+                      <p className="text-base font-semibold text-foreground">你好！我是秋叶的数字分身</p>
+                      <p className="text-sm text-muted-foreground max-w-xs">可以问我关于秋叶的职业、兴趣、作品等问题</p>
                     </div>
-                    <div className="flex flex-wrap gap-2 justify-center max-w-xs">
+                    <div className="flex flex-wrap gap-2 justify-center max-w-sm">
                       {suggestedQuestions.map((q) => (
                         <Button
                           key={q}
-                          variant="outline"
+                          variant="secondary"
                           size="sm"
-                          className="text-xs h-8"
+                          className="text-sm h-9"
                           onClick={() => handleSend(q)}
                         >
                           {q}
@@ -278,7 +315,7 @@ export default function HomePage() {
 
         {/* 页脚 */}
         <footer className="text-center text-xs text-muted-foreground pb-4 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <p>© 2026 叶秋 · 用 AI 做产品的内容策划</p>
+          <p>© 2026 秋叶 · 用 AI 做点有趣的东西</p>
         </footer>
       </div>
     </div>

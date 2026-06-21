@@ -6,15 +6,25 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-// 叶秋的知识库
+// 袁帅的知识库
 const knowledgeBase = {
-  identity: "内容策划",
-  currentWork: "正在搭自己的个人主页，整理作品集",
-  skills: ["内容表达", "AI 应用", "知识整理"],
-  interests: ["AI 应用", "写作", "动漫"],
-  trait: "喜欢把复杂问题讲成人话",
-  tagline: "一个正在学习用 AI 做产品的内容策划",
-  contact: "可以通过这个主页的聊天区和我互动，或者通过社交媒体联系我",
+  identity: "AI 学习者 / 生物科学学生",
+  currentWork: "做生物实验，同时用 AI 做更完整的小项目",
+  skills: ["排球", "乒乓球"],
+  interests: ["AI 学习", "生物医学领域", "排球", "乒乓球"],
+  trait: "平易近人，偶尔开点玩笑",
+  tagline: "正在用 AI 做点有趣的东西",
+  contact: "邮箱：17332616557@163.com，微信：YS2387747421",
+  education: {
+    highSchool: "廊坊市第一中学",
+    university: "内蒙古大学",
+    major: "生物科学（拔尖学生培养计划2.0基地）",
+    gpa: "3.87",
+    rank: "专业第二",
+    cet4: "579",
+    cet6: "548",
+  },
+  location: "河北省廊坊市",
 };
 
 // 基于关键词匹配生成回复
@@ -22,52 +32,77 @@ function generateReply(message: string): string {
   const msg = message.toLowerCase();
 
   // 你现在在做什么
-  if (msg.includes("做什么") || msg.includes("在忙") || msg.includes("最近") || msg.includes("现在")) {
-    return `我最近主要在做两件事：一是搭建这个个人主页，二是整理自己的作品集。作为一个内容策划，我正在把之前做过的项目和写过的内容做一个系统性的梳理。`;
+  if (msg.includes("做什么") || msg.includes("在忙") || msg.includes("最近") || msg.includes("现在") || msg.includes("项目")) {
+    return `最近主要在做两件事：一是生物实验方面的东西，二是尝试用 AI 做更完整的小项目。边学边做，进展不算快但还挺充实的。`;
   }
 
   // 作品
   if (msg.includes("作品") || msg.includes("项目") || msg.includes("案例") || msg.includes("做过什么")) {
-    return `我的作品主要集中在内容策划和知识整理方向。我擅长把复杂的信息梳理成清晰易懂的内容，这也是我一直在深耕的方向。目前我正在整理作品集，后续会在这个主页上展示出来。`;
+    return `我做过的项目主要有三个：一是生物竞赛，关于工程化益生菌预防奶山羊乳腺炎感染的；二是毕业设计，研究卵巢癌细胞相关靶点的；三是这个个人主页，用 AI 搭的。感兴趣的话可以聊聊具体内容。`;
   }
 
   // 联系方式
   if (msg.includes("联系") || msg.includes("微信") || msg.includes("邮箱") || msg.includes("怎么找")) {
-    return `很高兴你想联系我！目前你可以通过这个聊天区和我互动。如果你有合作意向，可以留言，我会尽快回复。`;
+    return `想联系我的话，邮箱是 17332616557@163.com，微信是 YS2387747421。直接加我，我们聊聊！`;
   }
 
   // 兴趣
   if (msg.includes("兴趣") || msg.includes("喜欢") || msg.includes("爱好")) {
-    return `我主要对三个方面感兴趣：AI 应用——探索 AI 如何帮助内容创作和产品开发；写作——用文字表达想法和分享知识；动漫——放松和获取灵感的好方式。`;
+    return `我感兴趣的东西挺杂的：AI 相关的东西肯定在关注，生物医学领域的知识我也一直在看。运动方面，排球和乒乓球是我的老本行了。平时也看看动漫放松一下。`;
   }
 
   // 擅长
   if (msg.includes("擅长") || msg.includes("技能") || msg.includes("能力")) {
-    return `我最擅长的方向是内容表达、AI 应用和知识整理。我有一个比较有意思的特点：喜欢把复杂问题讲成人话，让信息更容易被理解和传播。`;
+    return `打球还行吧，排球乒乓球都能来两下。其他的还在学，AI 这块我也是初学者，互相学习。`;
   }
 
   // 介绍
-  if (msg.includes("介绍") || msg.includes("你是谁") || msg.includes("名字") || msg.includes("叶秋")) {
-    return `我是叶秋，一个正在学习用 AI 做产品的内容策划。我擅长把复杂问题讲成人话，目前主要在做内容表达和知识整理相关的工作。`;
+  if (msg.includes("介绍") || msg.includes("你是谁") || msg.includes("名字") || msg.includes("袁帅") || msg.includes("真名") || msg.includes("姓名") || msg.includes("叫") || msg.includes("叫什么")) {
+    return `我叫袁帅，来自河北廊坊，高中就读于廊坊市第一中学，现在在内蒙古大学学生物科学（拔尖学生培养计划2.0基地），学分绩3.87，专业排名第二，四级579，六级548。做过三个主要项目：生物竞赛是关于工程化益生菌预防奶山羊乳腺炎的，毕设是卵巢癌细胞相关研究，还有就是这个用 AI 搭的个人主页。排球乒乓球都能打，感兴趣的话欢迎聊聊！`;
   }
 
   // AI
-  if (msg.includes("ai") || msg.includes("人工智能")) {
-    return `AI 是我非常感兴趣的方向！我正在学习如何用 AI 来辅助内容创作和产品开发。我认为 AI 是一个很好的工具，可以帮助我们更高效地整理知识和表达想法。`;
+  if (msg.includes("ai") || msg.includes("人工智能") || msg.includes("机器学习")) {
+    return `AI 这波浪潮确实挺有意思的。我现在主要在学 vibe coding，想把 AI 用在实际项目里。不是专家，就是一个正在学习的小白，有问题欢迎交流。`;
   }
 
-  // 写作
-  if (msg.includes("写作") || msg.includes("写") || msg.includes("文章")) {
-    return `写作是我表达想法的重要方式。我正在整理自己的写作方向，希望能在内容策划和知识分享方面有更多输出。`;
+  // 生物医学
+  if (msg.includes("生物") || msg.includes("医学") || msg.includes("健康")) {
+    return `生物医学这个方向我一直在关注，虽然不是科班出身，但平时会看看相关的科普和进展。有意思的方向，欢迎交流。`;
   }
 
-  // 动漫
-  if (msg.includes("动漫") || msg.includes("动画") || msg.includes("番")) {
-    return `动漫是我放松和获取灵感的方式之一。好的动漫作品在叙事和视觉表达上都有很多值得学习的地方，对我的内容策划工作也很有启发。`;
+  // 排球 / 乒乓球
+  if (msg.includes("排球") || msg.includes("乒乓球") || msg.includes("打球")) {
+    return `打球是我为数不多的运动爱好！排球和乒乓球都在打，虽然不算专业，但确实喜欢。你也打球吗？`;
+  }
+
+  // 学校 / 大学 / 高中 / 本科院校
+  if (msg.includes("学校") || msg.includes("大学") || msg.includes("高中") || msg.includes("在哪上学") || msg.includes("哪个学校") || msg.includes("本科") || msg.includes("院校") || msg.includes("母校")) {
+    return `我老家是河北廊坊的，高中就读于廊坊市第一中学，现在在内蒙古大学读书，专业是生物科学。`;
+  }
+
+  // 专业 / 生物科学
+  if (msg.includes("专业") || msg.includes("生物科学") || msg.includes("生科")) {
+    return `我在内蒙古大学学生物科学，是拔尖学生培养计划2.0基地的。简单说就是学校里比较好的生物专业吧。`;
+  }
+
+  // 绩点 / 成绩 / 排名
+  if (msg.includes("绩点") || msg.includes("gpa") || msg.includes("成绩") || msg.includes("排名") || msg.includes("学分")) {
+    return `学分绩 3.87，专业排名第二。不算特别拔尖，但也不差吧，还在努力中。`;
+  }
+
+  // 四级 / 六级 / 英语
+  if (msg.includes("四级") || msg.includes("六级") || msg.includes("英语")) {
+    return `四级 579，六级 548。英语这块还行吧，至少能看文献。`;
+  }
+
+  // 老家 / 家乡 / 廊坊
+  if (msg.includes("老家") || msg.includes("家乡") || msg.includes("廊坊") || msg.includes("来自")) {
+    return `我来自河北省廊坊市，标准的河北人。高中在廊坊市第一中学，后来考到了内蒙古大学。`;
   }
 
   // 默认回复
-  return `谢谢你的提问！我是叶秋的数字分身，可以回答关于叶秋的职业、兴趣、作品等方面的问题。你可以试试问我：你现在在做什么？你有哪些作品？怎么联系你？`;
+  return `这个问题我可能答不上来，毕竟我只是个还在学习的小白。邮箱是 17332616557@163.com，微信 YS2387747421，有问题可以直接问我。`;
 }
 
 Deno.serve(async (req) => {
