@@ -11,7 +11,7 @@ import { sendMessage, generateSessionId, getChatHistory } from '@/services/api';
 import type { ChatMessage } from '@/types/types';
 import { toast } from 'sonner';
 
-const AVATAR_URL = '/images/avatar.jpg';
+const AVATAR_URL = '/ai-homepage/images/avatar-new.jpg';
 
 const infoItems = [
   {
